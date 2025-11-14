@@ -1,0 +1,256 @@
+{
+      "IVT" : {
+            "image" : {
+                  "mask_h" : 448,
+                  "mask_w" : 960,
+                  "mask_top_crop" : 92,
+                  "final_mask_h" : 224,
+                  "final_mask_w" : 480
+            },
+            "bev" : {
+                  "noise_mode" : "soft",
+                  "noise_std" : 0.05,
+                  "noise_converging" : false
+            },
+            "logit_processing" : "sigmoid",
+            "ivt_backbone" : "efficientnet-b4",
+            "ivt_train_mode" : "pretrain2finetuning",
+            "pretrained_target_num" : 3,
+            "encoder" : {"dim" : 128,
+                        "pillar" : 0,
+                        "ivt_feat_shapes" : [[1, 128, 28, 60],
+                                             [1, 128, 14, 30]],
+                        "bev_layer_nums" : [2,3,4,5],
+                        "align_feature_num": 3,
+                        "fpn": {
+                              "use": true,
+                              "reverse_outputs": true,
+                              "out_channels": 256},
+                        "num_bottleneck_layers":2
+                  },
+            "decoder" : {"type": "IVTSelfSkip2Decoder"},
+
+            "training" : {"num_epochs": 24,
+                        "learning_rate": 4e-3,
+                        "weight_decay": 1e-2,
+                        "div_factor": 10,
+                        "pct_start": 0.03,
+                        "final_div_factor": 100}
+            },          
+               
+
+      "CVT": {
+            "backbone" : {"model_name": "efficientnet-b4",
+                        "layer_names": ["reduction_2", "reduction_4"],
+                        "layer_nums": [2, 4]},
+      
+            "encoder" : {"dim": 128,
+                        "scale": 1.0,
+                        "middle": [2, 2],
+                        "heads": 4,
+                        "dim_head": 32,
+                        "qkv_bias": true,
+                        "skip": true,
+                        "no_image_features": false,
+                        "sigma": 1.0,
+                        "num_bottleneck_layers":2},
+      
+            "decoder" : {"dim": 128,
+                        "blocks": [128, 128, 64],
+                        "residual": true,
+                        "factor": 2},
+      
+            "dim_last": 64,
+      
+            "outputs" : {"drivable": {"bev": [0, 1]},
+                        "vehicle": {"bev": [0, 1], "center": [1, 2]},
+                        "pedestrian": {"bev": [0, 1], "center": [1, 2]}},
+
+            "training" : {"num_epochs": 30,
+                        "learning_rate": 4e-3,
+                        "weight_decay": 1e-7,
+                        "div_factor": 10,
+                        "pct_start": 0.3,
+                        "final_div_factor": 10}
+            },
+      
+      "BEVFormer" : {
+            "type" : "tiny",
+            "detach_prev": true,
+            "backbone" : {"model_name": "resnet50",
+                         "layer_nums": [3]},
+                  
+            "encoder" : {"dim": 256,
+                        "repeat": 6,
+                        "feat_levels": [3],
+                        "z_candi": [-4.5, -2.17, 0.16, 2.5],
+                        "bev_downsample": 1
+                        },
+      
+            "decoder" : {"type": "CVT_conv",
+                        "dim": 256,
+                        "num_layers": 6,
+                        "num_heads": 8},
+
+            "training" : {"num_epochs": 24,
+                        "learning_rate": 2e-4,
+                        "weight_decay": 1e-2,
+                        "div_factor": 3,
+                        "pct_start": 0.02,
+                        "final_div_factor": 333.33}
+             },
+
+      "LSS" : {
+            "backbone" : {"model_name": "efficientnet-b0",
+                        "layer_nums": [4, 5]},
+            "encoder" : {"D": 41,
+                        "C": 64,
+                        "downsample": 16,
+                        "dim" : 128,
+                        "bev_downsample": 1},
+            "decoder" : {"type": "LSS_original",
+                        "dim": 256,
+                        "blocks": [128, 128, 64],
+                        "residual": true,
+                        "factor": 2},
+            "xbound" : [-50.0, 50.0, 0.5],
+            "ybound" : [-50.0, 50.0, 0.5],
+            "zbound" : [-10.0, 10.0, 20.0],
+            "dbound" : [4.0, 45.0, 1.0],
+
+            "training" : {"num_epochs": 30,
+                        "learning_rate": 1e-3,
+                        "weight_decay": 1e-7,
+                        "div_factor": 3,
+                        "pct_start": 0.01,
+                        "final_div_factor": 3.33}
+            },
+       
+
+      "PETR" : {
+            "decoder": {"dim":256,
+                        "single_decoder_on_multiclass" : true},
+            "model" : {
+                  "type" : "Petr3D_seg", 
+                  "use_grid_mask":true,
+                  "img_backbone" : {
+                        "type" : "resnet101",
+                        "spec_name" : "V-99-eSE", 
+                        "norm_eval" : true,
+                        "frozen_stages" : -1,
+                        "input_ch" : 3,
+                        "out_features" :["stage4","stage5"],
+                        "pretrained_file" : "models/petr/backbone_ckpts/fcos3d_vovnet_imgbackbone-remapped.pth"},
+                  "img_neck" : {
+                        "type" : "CPFPN",
+                        "in_channels" : [1024, 2048],
+                        "out_channels" : 256,
+                        "num_outs" : 2},
+                  "pts_bbox_head" : {
+                        "type" : "PETRHead_seg",
+                        "num_classes" : 10,
+                        "in_channels" : 256,
+                        "num_query" : 900,
+                        "num_lane" : 625,
+                        "blocks" : [256,256,128],
+                        "LID" : true,
+                        "with_position" : true,
+                        "with_multiview" : true,
+                        "with_se" : false,
+                        "with_time" : false,
+                        "with_multi" : true,
+                        "position_range" : [-61.2, -61.2, -10.0, 61.2, 61.2, 10.0],
+                        "code_weights"  :  [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+                        "normedlinear" : false,
+                        "transformer" : {
+                              "type" : "PETRTransformer",
+                              "decoder" : {
+                                    "type" : "PETRTransformerDecoder",
+                                    "return_intermediate" : true,
+                                    "num_pred" : 6,
+                                    "num_layers" : 6,
+                                    "transformerlayers" : {
+                                    "type" : "PETRTransformerDecoderLayer",
+                                    "attn_cfgs" : [
+                                          {
+                                                "type" : "MultiheadAttention",
+                                                "embed_dims" : 256,
+                                                "num_heads" : 8,
+                                                "dropout" : 0.1},
+                                          {
+                                                "type" : "PETRMultiheadAttention",
+                                                "embed_dims" : 256,
+                                                "num_heads" : 8,
+                                                "dropout" : 0.1}
+                                          ],
+                                    "ffn_cfgs" : {
+                                          "type" : "FFN",
+                                          "embed_dims" : 256,
+                                          "feedforward_channels" : 1024,
+                                          "num_fcs" : 2,
+                                          "ffn_drop" : 0,
+                                          "act_cfg" : {"type" : "ReLU", "inplace" : true}
+                                    }, 
+                                    "feedforward_channels" : 2048,
+                                    "ffn_dropout" : 0.1,
+                                    "operation_order" : ["self_attn", "norm", "cross_attn", "norm", "ffn", "norm"]
+                              }
+                  }},
+                  "transformer_lane" : {
+                        "type" : "PETRTransformer",
+                        "decoder" : {
+                              "type" : "PETRTransformerDecoder",
+                              "return_intermediate" : true,
+                              "num_layers" : 6,
+                              "transformerlayers" : {
+                              "type" : "PETRTransformerDecoderLayer",
+                              "attn_cfgs" : [
+                                    {
+                                          "type" : "MultiheadAttention",
+                                          "embed_dims" : 256,
+                                          "num_heads" : 8,
+                                          "dropout" : 0.1},
+                                    {
+                                          "type" : "PETRMultiheadAttention",
+                                          "embed_dims" : 256,
+                                          "num_heads" : 8,
+                                          "dropout" : 0.1}
+                                    ],
+                              "ffn_cfgs" : {
+                                    "type" : "FFN",
+                                    "embed_dims" : 256,
+                                    "feedforward_channels" : 1024,
+                                    "num_fcs" : 2,
+                                    "ffn_drop" : 0,
+                                    "act_cfg" :{"type" : "ReLU", "inplace" : true}
+                              }, 
+                              "feedforward_channels" : 2048,
+                              "ffn_dropout" : 0.1,
+                              "operation_order" : ["self_attn", "norm", "cross_attn", "norm", "ffn", "norm"]
+                              }
+                        }
+                  },
+                  "positional_encoding" : {"type" : "SinePositionalEncoding3D", 
+                                          "num_feats" : 128, 
+                                          "normalize" : true}
+                  }          
+                  },
+
+            "training" : {"num_epochs": 40,
+                        "learning_rate": 2e-4,
+                        "weight_decay": 1e-2,
+                        "div_factor": 3,
+                        "pct_start": 0.01,
+                        "final_div_factor": 333.33}
+      },
+
+      "BEVmapAE" : {"features" : [32, 64, 128],
+                "pool" : [true, true, false],
+                "noise_var" : [0, 1],
+                "hid_dim" : 128
+            },
+
+      "use_temporal": false,
+      "random_sample": false
+}
+          

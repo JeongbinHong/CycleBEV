@@ -1,0 +1,15 @@
+{
+  "Loss": {
+
+    "bce": {"alpha": -1.0,
+            "gamma": 0.0},
+    "focal": {"alpha": -1.0,
+            "gamma": 2.0},
+            
+    "target_focal" : {
+        "drivable":{"alpha":-1, "gamma":2.0},
+        "vehicle":{"alpha":-1, "gamma":2.0},
+        "pedestrian":{"alpha":0.8, "gamma":2.0}
+        }
+    }
+}

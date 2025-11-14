@@ -1,0 +1,6 @@
+{
+  "nuscenes" : {
+    "dataset_dir": "/your/nuscenes/directory/path/",
+    "version": "v1.0-trainval"
+  }
+}
