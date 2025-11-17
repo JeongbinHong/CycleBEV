@@ -17,15 +17,26 @@ Figure 3. Visualization of the proposed regularization framework.
 - Pretrained weights of IVT </br>
   Download the [pretrained checkpoints](https://drive.google.com/drive/folders/10Nfm69LMlvekKCMYbMmumhpMP01OyjaS) and move it to  **./saved_models/pretrained_ck/** </br>
 
+- For BEVFormer, you have to do following:
+```
+source activate your_env
+pip install packaging
+pip install --upgrade setuptools
+```
+```
+cd models/bevformer/ops/
+python setup.py build install
+```
+
 ## Train & Inference
 ```
 ./tools/train_cyclebev_cvt.sh
 ```
 
 ## Test
-'''
+```
 ./tools/test_cyclebev_cvt.sh
-'''
+```
 
 ## Acknowledgement
 
