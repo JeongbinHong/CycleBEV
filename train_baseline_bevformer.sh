@@ -31,7 +31,6 @@ python -m torch.distributed.run --nproc_per_node=4 --master_port=20001 train.py 
 --w_vt_ped 1.0 \
 --w_vt_height 0.0 \
 \
---val_ratio 0.0 \
 --val_step 3 \
 --save_checkpoint 1 \
 --visualization 1 \
