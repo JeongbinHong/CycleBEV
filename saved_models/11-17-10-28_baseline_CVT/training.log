@@ -1,0 +1,11 @@
+11/17/2025 10:28:43 AM INFO:Added key: store_based_barrier_key:1 to store for rank: 3
+11/17/2025 10:28:43 AM INFO:Rank 1: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+11/17/2025 10:28:48 AM ERROR:Traceback (most recent call last):
+  File "train.py", line 51, in main
+    cfg = config_update(read_config(), args)
+  File "/home/etri/Jeongbin/CycleBEV_git/utils/functions.py", line 53, in read_config
+    cfg['nuscenes']['dataset_dir'] = check_dataset_path(cfg['nuscenes']['dataset_dir'])
+  File "/home/etri/Jeongbin/CycleBEV_git/utils/functions.py", line 103, in check_dataset_path
+    if (os.path.exists(path.replace(current_machine, server))):
+TypeError: replace() argument 1 must be str, not None
+

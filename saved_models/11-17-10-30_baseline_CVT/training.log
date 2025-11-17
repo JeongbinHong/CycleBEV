@@ -1,0 +1,50 @@
+11/17/2025 10:30:39 AM INFO:Added key: store_based_barrier_key:1 to store for rank: 2
+11/17/2025 10:30:39 AM INFO:Rank 3: Completed store-based barrier for key:store_based_barrier_key:1 with 4 nodes.
+11/17/2025 10:32:08 AM INFO:Reducer buckets have been rebuilt in this iteration.
+11/17/2025 10:32:32 AM ERROR:Traceback (most recent call last):
+  File "train.py", line 101, in main
+    solver.train(data, e, b)
+  File "/home/etri/Jeongbin/CycleBEV_git/optimization/Baseline.py", line 326, in train
+    batch = self.reform_batch(batch)
+  File "/home/etri/Jeongbin/CycleBEV_git/optimization/Baseline.py", line 302, in reform_batch
+    batch[key] = batch[key].type(self.dtype).to(self.rank)
+KeyboardInterrupt
+
+O: Image size : 224x480
+11/17/2025 10:30:44 AM INFO: VT Model : CVT
+11/17/2025 10:30:44 AM INFO: IVT Backbone : efficientnet-b4, (pretrained: True)
+11/17/2025 10:30:44 AM INFO: weights for dri/veh/ped : 0.03125/0.25/1.0
+11/17/2025 10:30:44 AM INFO: weights for bev_loss/pvcc_loss/pvgg_loss : 1.0/0.4/1.0/0.001
+11/17/2025 10:30:44 AM INFO: Target class : ['drivable', 'vehicle', 'pedestrian']
+11/17/2025 10:30:44 AM INFO: Visibility : 0
+11/17/2025 10:30:44 AM INFO: Val ratio : 0.0
+11/17/2025 10:30:44 AM INFO: Augmentation : 0
+11/17/2025 10:30:44 AM INFO:----------------VT---------------
+11/17/2025 10:30:44 AM INFO: Optimizer type : adamw
+11/17/2025 10:30:44 AM INFO: Learning rate : 4e-03
+11/17/2025 10:30:44 AM INFO: Weight decay : 1e-07
+11/17/2025 10:30:44 AM INFO: LR scheduling type : OnecycleLR
+11/17/2025 10:30:44 AM INFO: div_factor : 10
+11/17/2025 10:30:44 AM INFO: pct_start : 0.3
+11/17/2025 10:30:44 AM INFO: final_div_factor : 10
+11/17/2025 10:30:44 AM INFO:---------------IVT----------------
+11/17/2025 10:30:44 AM INFO: Optimizer type : adamw
+11/17/2025 10:30:44 AM INFO: Learning rate : 4e-03
+11/17/2025 10:30:44 AM INFO: Weight decay : 1e-02
+11/17/2025 10:30:44 AM INFO: LR scheduling type : OnecycleLR
+11/17/2025 10:30:44 AM INFO: div_factor : 10
+11/17/2025 10:30:44 AM INFO: pct_start : 0.03
+11/17/2025 10:30:44 AM INFO: final_div_factor : 100
+11/17/2025 10:30:44 AM INFO:---------------------------------
+11/17/2025 10:31:57 AM INFO:>> Number of available Train samples is [28130]
+11/17/2025 10:31:57 AM INFO:>> Number of available Val samples is [6019]
+11/17/2025 10:32:08 AM INFO:Reducer buckets have been rebuilt in this iteration.
+11/17/2025 10:32:32 AM ERROR:Traceback (most recent call last):
+  File "train.py", line 101, in main
+    solver.train(data, e, b)
+  File "/home/etri/Jeongbin/CycleBEV_git/optimization/Baseline.py", line 326, in train
+    batch = self.reform_batch(batch)
+  File "/home/etri/Jeongbin/CycleBEV_git/optimization/Baseline.py", line 302, in reform_batch
+    batch[key] = batch[key].type(self.dtype).to(self.rank)
+KeyboardInterrupt
+
