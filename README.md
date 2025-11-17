@@ -19,11 +19,6 @@ Figure 3. Visualization of the proposed regularization framework.
 
 - For BEVFormer, you have to do following:
 ```
-source activate your_env
-pip install packaging
-pip install --upgrade setuptools
-```
-```
 cd models/bevformer/ops/
 python setup.py build install
 ```
