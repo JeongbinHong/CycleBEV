@@ -5,7 +5,7 @@ Transforming image features from perspective view (PV) space to bird's-eye-view 
 
 ## Methods
 <img src="./figs/Fig3.png" width="480"> </br>
-Visualization of the proposed regularization framework.
+Figure 3. Visualization of the proposed regularization framework.
 
 ## Preparation
 - Environments </br>
@@ -19,9 +19,13 @@ Visualization of the proposed regularization framework.
 
 ## Train & Inference
 ```
-./train_cyclebev_cvt.sh
+./tools/train_cyclebev_cvt.sh
 ```
 
+## Test
+'''
+./tools/test_cyclebev_cvt.sh
+'''
 
 ## Acknowledgement
 
