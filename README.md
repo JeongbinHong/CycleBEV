@@ -1,21 +1,17 @@
-# CycleBEV
+# CycleBEV: Regularizing View Transformation Networks via View Cycle Consistency for Bird’s-Eye-View Semantic Segmentation
 
 
 ## Preparation
 - Environments </br>
 
-  nuScenes: https://www.nuscenes.org/
-  
-  PV pseudo label: [nuScenes image segmentation pseudo annotaion file](https://drive.google.com/drive/folders/1Ta8msGwHT4LD1C0pcs4D3-Jzyc99PaIA?usp=drive_link)
+- Dataset </br>
+  - Download [nuScenes](https://www.nuscenes.org/) dataset and modify the **"dataset_dir" in ./config/config.json** </br>
+  - Download [pseudo annotation](https://drive.google.com/drive/folders/1ZHWtf2xI3fY5_hJBpwpYvMOaigPUSCCI) for image segmentation and move it to **./nuscenes/v1.0-trainval/** in your nuscenes path. </br>
 
-- Dataset
-
-- Pretrained weights of IVT
-
-  Download the [pretrained checkpoints](https://drive.google.com/drive/folders/10Nfm69LMlvekKCMYbMmumhpMP01OyjaS?usp=drive_link) in the **./saved_models/pretrained_ck/**
+- Pretrained weights of IVT </br>
+  Download the [pretrained checkpoints](https://drive.google.com/drive/folders/10Nfm69LMlvekKCMYbMmumhpMP01OyjaS) and move it to  **./saved_models/pretrained_ck/** </br>
 
 ## Train & Inference
-
 ```
 ./train_cyclebev_cvt.sh
 ```
