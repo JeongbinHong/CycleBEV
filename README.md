@@ -39,7 +39,8 @@ python setup.py build install
 
 
 ## Contact
-hjb3880@gmail.com
-hjb3880@etri.re.kr
+```
+hjb3880@gmail.com hjb3880@etri.re.kr
 d1024.choi@etri.re.kr
+```
 
