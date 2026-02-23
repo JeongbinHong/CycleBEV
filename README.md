@@ -9,6 +9,8 @@ Figure 3. Visualization of the proposed regularization framework.
 
 ## Preparation
 - Environments </br>
+  - Python 3.8–3.10
+  - torch==1.11.0+cu113 torchvision==0.12.0+cu113
 
 - Dataset </br>
   - Download [nuScenes](https://www.nuscenes.org/) dataset and modify the **"dataset_dir" in ./config/config.json** </br>
@@ -37,3 +39,7 @@ python setup.py build install
 
 
 ## Contact
+hjb3880@gmail.com
+hjb3880@etri.re.kr
+d1024.choi@etri.re.kr
+
