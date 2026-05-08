@@ -243,7 +243,9 @@ class InverseCrossViewAttention(nn.Module):
         if bev_feat_grid.ndim == 4:
             Xi_flat = rearrange(Xi_2D, 'b n d (h w) -> (b n) d h w', h=bf_h, w=bf_w)
         elif bev_feat_grid.ndim == 5:
-            Xi_flat = rearrange(Xi_2D, 'b n d (h w p) -> (b n) (d p) h w', h=bf_h, w=bf_w, p=bf_p) # (b n) (2 bf_p) bf_h, bf_w 
+            Xi_flat = rearrange(Xi_2D, 'b n d (h w p) -> (b n) (d p) h w', h=bf_h, w=bf_w, p=bf_p) # (b n) (2 bf_p) bf_h, bf_w
+        else:
+            raise ValueError(f"Unexpected bev_feat_grid ndim: {bev_feat_grid.ndim}")
         bev_embed = self.bev_embed(Xi_flat)                                    # (b n) d bf_h, bf_w 
 
         t = extrinsic[..., -1:]                                                # b n 4 1
@@ -398,6 +400,8 @@ class Encoder(nn.Module):
             extrinsic = batch['extrinsics'][-1]  # b n 4 4
         elif batch['extrinsics'].ndim == 4:
             extrinsic = batch['extrinsics']
+        else:
+            raise ValueError(f"Unexpected extrinsics ndim: {batch['extrinsics'].ndim}")
             
         if self.ivt_backbone is not None:
             bev_gt = batch['bev']           # b 12 bev_h bev_w

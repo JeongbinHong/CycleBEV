@@ -13,18 +13,20 @@ class InverseCrossViewTransformer(nn.Module):
         else:
             num_classes = len(args.targets) + args.get_height
         if 'resnet' in cfg['IVT']['ivt_backbone']:
-            ivt_backbone = ResNet_Extractor(num_classes=num_classes, 
-                                            type=cfg['IVT']['ivt_backbone'], 
+            ivt_backbone = ResNet_Extractor(num_classes=num_classes,
+                                            type=cfg['IVT']['ivt_backbone'],
                                             layer_nums=bev_layer_nums,
                                             pretrained=True,
                                             channel_adapter=True)
         elif 'efficientnet' in cfg['IVT']['ivt_backbone']:
-            ivt_backbone = EffNet_Extractor(num_classes=num_classes, 
-                                            type=cfg['IVT']['ivt_backbone'], 
+            ivt_backbone = EffNet_Extractor(num_classes=num_classes,
+                                            type=cfg['IVT']['ivt_backbone'],
                                             layer_nums=bev_layer_nums,
                                             pretrained=True,
                                             channel_adapter=True)
-        
+        else:
+            raise ValueError(f"Unsupported ivt_backbone: {cfg['IVT']['ivt_backbone']}")
+
         ivt_backbone = ivt_backbone.to(rank)
         sample = torch.randn(1, num_classes, args.bev_h, args.bev_w, device=rank)
         bev_feats = ivt_backbone(sample)
