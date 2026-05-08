@@ -13,9 +13,9 @@ import torch.nn.functional as F
 import math
 from einops import rearrange
 
-from ..transformers.petr_transformer import PETRTransformer
-from ..utils.positional_encoding import SinePositionalEncoding, SinePositionalEncoding3D
-from ..utils.functions import inverse_sigmoid
+from models.petr.transformers.petr_transformer import PETRTransformer
+from models.petr.utils.positional_encoding import SinePositionalEncoding, SinePositionalEncoding3D
+from models.petr.utils.functions import inverse_sigmoid
 
 def pos2posemb3d(pos, num_pos_feats=128, temperature=10000):
     scale = 2 * math.pi
@@ -591,6 +591,7 @@ class PETRHead_seg(nn.Module):
         masks = F.interpolate(
             masks, size=x.shape[-2:], mode='nearest').to(torch.bool)
 
+        key_padding_mask = masks
         if self.with_position:
             coords_position_embeding, coords_mask = self.position_embeding(img_feats, I, E, pad_size, masks)
             key_padding_mask = masks | coords_mask # 2025-08-13
