@@ -16,8 +16,8 @@ from PIL import Image
 
 from models.backbone import VoVNetCP
 from models.extractors import ResNet_Extractor
-from ..dense_heads.petr_head_seg import PETRHead_seg
-from ..neck.cp_fpn import CPFPN
+from models.petr.dense_heads.petr_head_seg import PETRHead_seg
+from models.petr.neck.cp_fpn import CPFPN
 from einops import rearrange
 
 def IOU (intputs, targets, eps=1e-6):
