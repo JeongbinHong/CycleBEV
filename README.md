@@ -1,5 +1,14 @@
 # CycleBEV: Regularizing View Transformation Networks via View Cycle Consistency for Bird’s-Eye-View Semantic Segmentation
 
+## Table of Contents
+- [Abstract](#abstract)
+- [Methods](#methods)
+- Preparation
+- Train & Inference
+- Test
+- Acknowledgement
+- Authors
+
 ## Abstract
 Transforming image features from perspective view (PV) space to bird's-eye-view (BEV) space remains challenging in autonomous driving due to depth ambiguity and occlusion. Although several view transformation (VT) paradigms have been proposed, the challenge still remains. In this paper, we propose a new regularization framework, dubbed CycleBEV, that enhances existing VT models for BEV semantic segmentation. Inspired by cycle consistency, widely used in image distribution modeling, we devise an inverse view transformation (IVT) network that maps BEV segmentation maps back to PV segmentation maps and use it to regularize VT networks during training through cycle consistency losses, enabling them to capture richer semantic and geometric information from input PV images. To further exploit the capacity of the IVT network, we introduce two novel ideas that extend cycle consistency into geometric and representation spaces. We evaluate CycleBEV on four representative VT models covering three major paradigms using the large-scale nuScenes dataset. Experimental results show consistent improvements---with gains of up to **0.74**, **4.86**, and **3.74** mIoU for drivable area, vehicle, and pedestrian classes, respectively---without increasing inference complexity, since the IVT network is used only during training. 
 
@@ -38,9 +47,9 @@ python setup.py build install
 ## Acknowledgement
 
 
-## Contact
+## Authors
 ```
-hjb3880@gmail.com hjb3880@etri.re.kr
+hjb3880@etri.re.kr, hjb3880@gmail.com
 d1024.choi@etri.re.kr
 ```
 
