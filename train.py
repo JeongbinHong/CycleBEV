@@ -154,7 +154,7 @@ def main(args):
         
         if rank==0: logger.info(f"The training has been completed 🚩")
 
-    except:
+    except Exception:
         logging.error(traceback.format_exc())
 
 if __name__ == '__main__':
@@ -169,7 +169,7 @@ if __name__ == '__main__':
     args.save_dir = os.path.join(args.save_dir, args.training_name)
     if args.save_dir != '' and not os.path.exists(args.save_dir):
         try: os.makedirs(args.save_dir)
-        except: print(f'>> [{args.save_dir}] seems to already exist!!')
+        except OSError: print(f'>> [{args.save_dir}] seems to already exist!!')
         args.load_pretrained = 0 # because there are no pre-trained nets in save_dir
 
     main(args)
