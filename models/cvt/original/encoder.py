@@ -343,6 +343,8 @@ class CrossViewAttention(nn.Module):
             key = rearrange(key_flat, '(b n) ... -> b n ...', b=b, n=n)               # b n d h w   4, 6, 128, 56, 120
             val = rearrange(val_flat, '(b n) ... -> b n ...', b=b, n=n)               # b n d h w   4, 6, 128, 56, 120
 
+        else:
+            raise ValueError(f"Unsupported geo_mode: {self.cfg['geo_mode']}")
 
         return self.cross_attend(query, key, val, skip=x if self.skip else None)
 

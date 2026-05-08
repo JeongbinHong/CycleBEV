@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from models.cvt.decoder import Decoder
-from models.cvt.encoder import Encoder
+from models.cvt.original.encoder import Encoder
 from models.cvt.efficientnet import EfficientNetExtractor
 
 class CrossViewTransformer(nn.Module):
@@ -25,8 +25,7 @@ class CrossViewTransformer(nn.Module):
                                         model_name=cfg['CVT']['backbone']['model_name'])
 
         self.encoder = Encoder(backbone=backbone,
-                               cfg=cfg,
-                               args=args)
+                               cfg=cfg)
 
         self.decoder = Decoder(dim=cfg['CVT']['decoder']['dim'],
                                blocks=cfg['CVT']['decoder']['blocks'],
