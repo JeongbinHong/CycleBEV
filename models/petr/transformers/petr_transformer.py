@@ -13,7 +13,7 @@ import torch.nn as nn
 import copy
 import torch.utils.checkpoint as cp
 
-from .transformer import BaseTransformerLayer
+from models.petr.transformers.transformer import BaseTransformerLayer
 
 class PETRTransformer(nn.Module):
     """Implements the DETR transformer.

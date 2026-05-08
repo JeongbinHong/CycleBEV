@@ -476,7 +476,9 @@ class BaseTransformerLayer(nn.Module):
                     attention = MultiheadAttention(**att_args)
                 elif att_class == 'PETRMultiheadAttention':
                     attention = PETRMultiheadAttention(**att_args)
-                
+                else:
+                    raise ValueError(f"Unsupported attention class: {att_class}")
+
                 # Some custom attentions used as `self_attn`
                 # or `cross_attn` can have different behavior.
                 attention.operation_name = operation_name
