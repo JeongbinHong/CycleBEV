@@ -307,9 +307,10 @@ class DatasetLoader(Dataset):
                     break
                 rec = self.sample_records[index_t]
                 # Check if scene is the same
-                if (previous_rec is not None) and (rec['scene_token'] != previous_rec['scene_token']):
-                    is_valid_data = False
-                    break
+                if previous_rec is not None:
+                    if rec['scene_token'] != previous_rec['scene_token']:
+                        is_valid_data = False
+                        break
 
                 current_indices.append(index_t)
                 previous_rec = rec
