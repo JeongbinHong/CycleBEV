@@ -372,6 +372,8 @@ class Encoder(nn.Module):
             b, t, n, _, _ = batch['extrinsics_inv'].shape
         elif batch['extrinsics_inv'].ndim == 4:
             b, n, _, _ = batch['extrinsics_inv'].shape
+        else:
+            raise ValueError(f"Unexpected extrinsics_inv ndim: {batch['extrinsics_inv'].ndim}")
 
         I_inv = batch['intrinsics_inv']
         E_inv = batch['extrinsics_inv']
