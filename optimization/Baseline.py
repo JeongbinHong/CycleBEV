@@ -34,7 +34,9 @@ class FullModel(nn.Module):
             else:
                 img_features = self.backbone(input_images)
             bev_pred, _ = self.vt(batch, img_features, isTrain)
-            
+        else:
+            raise ValueError(f"Unsupported vt_model: {self.args.vt_model}")
+
         return bev_pred
     
         
@@ -80,6 +82,7 @@ class Solver:
         self.norm = Normalize('imagenet')
         # self.norm_ns = Normalize('nuscenes_topcrop')
 
+        img_feat_shapes = []
         if args.vt_model == 'PETR':
             backbone = None
         else:

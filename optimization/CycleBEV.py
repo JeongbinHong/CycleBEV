@@ -53,6 +53,8 @@ class FullModel(nn.Module):
             else:
                 img_features = self.backbone(input_images)
             bev_pred, vt_output = self.vt(batch, img_features, isTrain)
+        else:
+            raise ValueError(f"Unsupported vt_model: {self.args.vt_model}")
 
         if isTrain:
             # Cycle Consistency Path : Image → BEV → PV
@@ -169,6 +171,7 @@ class Solver:
         self.norm = Normalize('imagenet')
         self.norm_ns = Normalize('nuscenes_topcrop')
         
+        img_feat_shapes = []
         if args.vt_model == 'PETR':
             backbone = None
         else:
@@ -278,6 +281,8 @@ class Solver:
             vt_params = [*m.vt.parameters()]
         elif self.args.vt_model in {'CVT', 'BEVFormer'}:
             vt_params = [*m.backbone.parameters(), *m.vt.parameters()]
+        else:
+            raise ValueError(f"Unsupported vt_model: {self.args.vt_model}")
         
         ivt_params = [*m.ivt.parameters(), *m.decoder.parameters()]
         if self.args.w_feat_loss != 0.0:
