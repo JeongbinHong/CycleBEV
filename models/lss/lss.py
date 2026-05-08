@@ -9,7 +9,7 @@ from torch import nn
 from efficientnet_pytorch import EfficientNet
 from torchvision.models.resnet import resnet18
 
-from .tools import gen_dx_bx, cumsum_trick, QuickCumsum
+from models.lss.tools import gen_dx_bx, cumsum_trick, QuickCumsum
 
 import torch.nn.functional as F
 from einops import rearrange
@@ -370,20 +370,25 @@ class LiftSplatShoot(nn.Module):
         
         x3, x1 = self.bevencode(x)
         
-        if self.cfg['LSS']['decoder']['type'] == 'LSS_original':
+        decoder_type = self.cfg['LSS']['decoder']['type']
+        if decoder_type == 'LSS_original':
             z = self.bevdecode(x3, x1)
-        elif self.cfg['LSS']['decoder']['type'] == 'CVT_conv':
+        elif decoder_type == 'CVT_conv':
             z = self.to_logits(self.decoder(x3))
-        
+        else:
+            raise ValueError(f"Unsupported decoder type: {decoder_type}")
+
         output = {}
         for idx, key in enumerate(self.args.targets):
             output[key] = [z[:, idx:idx+1]]
-            
+
         if isTrain and self.args.get_height:
-            if self.cfg['LSS']['decoder']['type'] == 'LSS_original':
+            if decoder_type == 'LSS_original':
                 h = self.heightdecode(x3, x1)
-            elif self.cfg['LSS']['decoder']['type'] == 'CVT_conv':
+            elif decoder_type == 'CVT_conv':
                 h = self.to_logits_height(self.decoder_height(x3))
+            else:
+                raise ValueError(f"Unsupported decoder type: {decoder_type}")
             output['height'] = [h]
             
         if self.args.model_name == 'Baseline_PYVA':
