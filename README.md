@@ -1,4 +1,6 @@
-# CycleBEV: Regularizing View Transformation Networks via View Cycle Consistency for Bird’s-Eye-View Semantic Segmentation
+# [CVPR2026] CycleBEV: Regularizing View Transformation Networks via View Cycle Consistency for Bird’s-Eye-View Semantic Segmentation
+
+[![ariXive-Paper](https://img.shields.io/badge/ariXive-Paper-brightgreen)](https://arxiv.org/abs/2602.23575)
 
 ## Table of Contents
 - [Abstract](#abstract)
