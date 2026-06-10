@@ -1,7 +1,9 @@
 # [CVPR2026] CycleBEV: Regularizing View Transformation Networks via View Cycle Consistency for Bird’s-Eye-View Semantic Segmentation
 
 [![ariXive-Paper](https://img.shields.io/badge/arXive-Paper-red)](https://arxiv.org/abs/2602.23575)
-[![CVPR-Paper](https://img.shields.io/badge/CVPR2026-Video-blue)](https://cvpr.thecvf.com/virtual/2026/poster/38399)
+[![CVPR-Paper](https://img.shields.io/badge/CVPR2026-Paper-blue)](https://openaccess.thecvf.com/content/CVPR2026/html/Hong_CycleBEV_Regularizing_View_Transformation_Networks_via_View_Cycle_Consistency_for_CVPR_2026_paper.html)
+[![CVPR-Video](https://img.shields.io/badge/CVPR2026-Video-green)](https://cvpr.thecvf.com/virtual/2026/poster/38399)
+
 
 ## Table of Contents
 - [Abstract](#abstract)
